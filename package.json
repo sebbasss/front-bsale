@@ -2,8 +2,5 @@
   "dependencies": {
     "node-fetch": "^3.2.6"
   },
-  "type": "module",
-  "scripts": {
-    "start": "node app.js"
-  }
+  "type": "module"
 }

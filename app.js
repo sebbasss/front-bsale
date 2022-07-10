@@ -86,6 +86,8 @@ categoryList.addEventListener('click', (e) => {
 form.addEventListener('submit', () => {
   removeSelectedList(categoryList.children);
   cards.innerHTML = '';
-  const url = `https://api-bsale-seb.herokuapp.com/api/v1/products/${document.querySelector('input').value}`
-  append(url, cards, productCard);
-})
+  document.addEventListener("DOMContentLoaded", function(event) {
+    const url = `https://api-bsale-seb.herokuapp.com/api/v1/products/${document.querySelector('input').value}`
+    append(url, cards, productCard);
+  });
+});

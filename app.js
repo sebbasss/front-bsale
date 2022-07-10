@@ -71,3 +71,20 @@ cardsNode.addEventListener('click', (e) => {
       });
     });
 })
+
+//adding search functionality
+
+const form = document.getElementById('form');
+
+form.addEventListener('submit', (e) => {
+  for (let i = 0; i < categoryList.children.length; i++) {
+    categoryList.children[i].classList.remove('active')
+  };
+  getData(`https://api-bsale-seb.herokuapp.com/api/v1/products/${document.querySelector('input').value}`)
+    .then(res => {
+      cards.innerHTML = '';
+      res.forEach((el) => {
+        cards.appendChild(productCard(el))
+      });
+    });
+})

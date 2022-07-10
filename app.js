@@ -1,35 +1,43 @@
-// calling the api
+// URLs (api)
+const categoriesURL = 'https://api-bsale-seb.herokuapp.com/api/v1/categories';
+const productsURL = 'https://api-bsale-seb.herokuapp.com/api/v1/products';
 
+// DOM ELEMENTS
+const categoryList = document.getElementById("category-list");
+const cards = document.getElementById("cards-grid");
+const form = document.getElementById('form');
+
+// FUNCTIONS TO BE REUSED
 const getData = (url) => {
   return fetch(url)
   .then(response => response.json())
   .then(data => {
     return data
-  })
-}
+  });
+};
 
-//filling left side
+const append = (api, parentElement, childElement) => {
+  getData(api)
+  .then(res => {
+    res.forEach((el) => {
+      parentElement.appendChild(childElement(el))
+    });
+  });
+};
 
+const removeSelectedList = (pathDOM) => {
+  for (let i = 0; i < pathDOM.length; i++) {
+    pathDOM[i].classList.remove('active')
+  };
+};
+
+// PROGRAMATICAL CREATION OF HTML ELEMENTS
 const categoryListItem = (category) => {
   let li = document.createElement("li");
   li.classList.add("list-group-item");
   li.textContent = category.name;
   return li;
 };
-
-const categoryList = document.getElementById("category-list");
-
-getData('https://api-bsale-seb.herokuapp.com/api/v1/categories').then(res => {
-  res.forEach((el) => {
-    categoryList.appendChild(categoryListItem(el))
-  })
-})
-
-
-
-
-// filling right side
-const cards = document.getElementById("cards-grid");
 
 const productCard = (product) => {
   let div = document.createElement("div");
@@ -40,51 +48,25 @@ const productCard = (product) => {
     <h3>$${product.price}</h3>
   </div>`;
   return div;
-}
+};
 
-const cardsNode = document.getElementById('category-list')
+// FILLING LIST AND CARDS
+append(categoriesURL, categoryList, categoryListItem);
+append(productsURL, cards, productCard);
 
-
-
-getData('https://api-bsale-seb.herokuapp.com/api/v1/products')
-.then(res => {
-  res.forEach((el) => {
-    cards.appendChild(productCard(el))
-  });
+// ADDING CATEGORY LIST FUNCTIONALITY
+categoryList.addEventListener('click', (e) => {
+  removeSelectedList(categoryList.children);
+  e.target.classList.add('active');
+  cards.innerHTML = '';
+  const url = `https://api-bsale-seb.herokuapp.com/api/v1/categories/${e.target.innerHTML}`;
+  append(url, cards, productCard);
 });
 
-// changing selected category
-
-
-
-cardsNode.addEventListener('click', (e) => {
-  for (let i = 0; i < e.target.parentElement.children.length; i++) {
-    e.target.parentElement.children[i].classList.remove('active')
-  };
-  e.target.classList.add('active')
-  console.log(e.target.innerHTML);
-  getData(`https://api-bsale-seb.herokuapp.com/api/v1/categories/${e.target.innerHTML}`)
-    .then(res => {
-      cards.innerHTML = '';
-      res.forEach((el) => {
-        cards.appendChild(productCard(el))
-      });
-    });
-})
-
-//adding search functionality
-
-const form = document.getElementById('form');
-
+// ADDING SEARCH BAR FUNCTIONALITY
 form.addEventListener('submit', (e) => {
-  for (let i = 0; i < categoryList.children.length; i++) {
-    categoryList.children[i].classList.remove('active')
-  };
-  getData(`https://api-bsale-seb.herokuapp.com/api/v1/products/${document.querySelector('input').value}`)
-    .then(res => {
-      cards.innerHTML = '';
-      res.forEach((el) => {
-        cards.appendChild(productCard(el))
-      });
-    });
-})
+  removeSelectedList(categoryList.children);
+  cards.innerHTML = '';
+  const url = `https://api-bsale-seb.herokuapp.com/api/v1/products/${document.querySelector('input').value}`;
+  append(url, cards, productCard);
+});

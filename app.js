@@ -91,7 +91,8 @@ form.addEventListener('submit', () => {
   .then(response => response.json())
   .then(data => {
     if (data.length === 0) {
-      alert('No tenemos productos con ese nombre!', 'warning')
+      alert('No tenemos productos con ese nombre!', 'warning');
+      append(productsURL, cards, productCard);
     }
   });
   append(url, cards, productCard);

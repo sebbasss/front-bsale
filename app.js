@@ -87,14 +87,6 @@ form.addEventListener('submit', () => {
   removeSelectedList(categoryList.children);
   cards.innerHTML = '';
   const url = `https://api-bsale-seb.herokuapp.com/api/v1/products/${document.querySelector('input').value}`
-  fetch(url)
-  .then(response => response.json())
-  .then(data => {
-    if (data.length === 0) {
-      alert('No tenemos productos con ese nombre!', 'warning');
-      append(productsURL, cards, productCard);
-    }
-  });
   append(url, cards, productCard);
   form.reset();
 })

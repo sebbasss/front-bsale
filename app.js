@@ -79,9 +79,7 @@ categoryList.addEventListener('click', (e) => {
   } else {
     const url = `https://api-bsale-seb.herokuapp.com/api/v1/categories/${e.target.innerHTML}`
     append(url, cards, productCard);
-  }
-  // const url = `https://api-bsale-seb.herokuapp.com/api/v1/categories/${e.target.innerHTML}`;
-  // append(url, cards, productCard);
+  };
 });
 
 // ADDING SEARCH BAR FUNCTIONALITY

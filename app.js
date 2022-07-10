@@ -88,5 +88,4 @@ form.addEventListener('submit', () => {
   cards.innerHTML = '';
   const url = `https://api-bsale-seb.herokuapp.com/api/v1/products/${document.querySelector('input').value}`
   append(url, cards, productCard);
-  form.reset();
 })

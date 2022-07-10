@@ -84,11 +84,9 @@ categoryList.addEventListener('click', (e) => {
 
 // ADDING SEARCH BAR FUNCTIONALITY
 form.addEventListener('submit', (e) => {
-  e.preventDefault()
-  console.log(document.querySelector('input').value);
   removeSelectedList(categoryList.children);
   cards.innerHTML = '';
   const url = `https://api-bsale-seb.herokuapp.com/api/v1/products/${document.querySelector('input').value}`
   append(url, cards, productCard);
-
+  e.preventDefault()
 });

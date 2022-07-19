@@ -42,12 +42,12 @@ const categoryListItem = (category) => {
 const productCard = (product) => {
   let div = document.createElement("div");
   div.classList.add("card");
-  div.innerHTML =`<img src="${product.url_image}" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg';"
+  div.innerHTML =`<img src="${product.url_image || ''}" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg';"
   class="card-img-top">
   <div class="card-body">
     <p class="card-text">${product.name}</p>
-    <h3>$${product.price}</h3>
-  </div>`;
+    <h4 class="price">$${product.price}</h3>
+  </div>`
   return div;
 };
 

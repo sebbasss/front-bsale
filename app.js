@@ -7,8 +7,6 @@ const categoryList = document.getElementById("category-list");
 const cards = document.getElementById("cards-grid");
 const form = document.getElementById('form');
 
-const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
-
 // FUNCTIONS TO BE REUSED
 const getData = (url) => {
   return fetch(url)
@@ -52,18 +50,6 @@ const productCard = (product) => {
   return div;
 };
 
-const alert = (message, type) => {
-  const wrapper = document.createElement('div')
-  wrapper.innerHTML = [
-    `<div class="alert alert-${type} alert-dismissible" role="alert">`,
-    `   <div>${message}</div>`,
-    '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
-    '</div>'
-  ].join('')
-
-  alertPlaceholder.append(wrapper)
-}
-
 // FILLING LIST AND CARDS - initialization
 append(categoriesURL, categoryList, categoryListItem);
 append(productsURL, cards, productCard);
@@ -91,7 +77,7 @@ form.addEventListener('submit', (e) => {
   .then(response => response.json())
   .then(data => {
     if (data.length === 0) {
-      alert('No tenemos productos con ese nombre!', 'warning')
+      window.alert("No tenemos productos con ese nombre!")
     } else {
       append(url, cards, productCard);
     }
